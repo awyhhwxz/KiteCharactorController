@@ -11,5 +11,5 @@ public class KiteCharactorInfo {
     public float CameraVerticalSpeed = 10.0f;
 
     public float CameraMaxVerticalAngle = 60.0f;
-    public float CameraMinVerticalAngle = 60.0f;
+    public float CameraMinVerticalAngle = -60.0f;
 }
