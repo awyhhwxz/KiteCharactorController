@@ -2,25 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KiteCharactorContollerHandler
+public partial class KiteCharactorContollerHandler
 {
-
-    public bool IsEnable { get; set; }
 
     private KiteCharactorContollerHandlerImpl _charactorHandlerImpl = new KiteCharactorContollerHandlerImpl();
     private KiteCharactorCameraHandler _cameraHandler = new KiteCharactorCameraHandler();
 
     public KiteCharactorInfo CharactorInfo = new KiteCharactorInfo();
 
+    public bool IsEnable
+    {
+
+        get { return _isEnable; }
+        set
+        {
+            if(_isEnable != value)
+            {
+                _isEnable = value;
+                RefreshRigidbody();
+            }
+        }
+    }
+
     public KiteCharactorContollerHandler()
     {
-        IsEnable = true;
-        CharactorInfo.WalkSpeed = 1f;
         _charactorHandlerImpl.CharactorInfo = CharactorInfo;
         _cameraHandler.CharactorInfo = CharactorInfo;
     }
 
     protected bool IsCharactorStateChangable { get { return IsEnable && CharactorInfo.CharactorObj; } }
+
+    public void Update()
+    {
+        if (IsCharactorStateChangable) _charactorHandlerImpl.Update();
+    }
 
     public void GoToForward()
     {
@@ -50,5 +65,25 @@ public class KiteCharactorContollerHandler
     public void SetVerticalOffset(float offset)
     {
         if (IsCharactorStateChangable) _cameraHandler.SetVerticalOffset(offset);
+    }
+}
+
+public partial class KiteCharactorContollerHandler
+{
+    private bool _isEnable = true;
+    
+    protected void RefreshRigidbody()
+    {
+        var charactorRigidBody = _charactorHandlerImpl.CharactorRigidBody;
+        if (_isEnable)
+        {
+            charactorRigidBody.isKinematic = false;
+            charactorRigidBody.useGravity = true;
+        }
+        else
+        {
+            charactorRigidBody.isKinematic = true;
+            charactorRigidBody.useGravity = false;
+        }
     }
 }

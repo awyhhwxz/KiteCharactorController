@@ -5,7 +5,7 @@ using UnityEngine;
 public class KiteKeyBoardCharactorController : MonoBehaviour {
 
     private KiteCharactorContollerHandler _handler = new KiteCharactorContollerHandler();
-
+    
     void Awake()
     {
         _handler.CharactorInfo.CharactorObj = this.gameObject;
@@ -15,7 +15,7 @@ public class KiteKeyBoardCharactorController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		if(Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             _handler.GoToLeft();
         }
@@ -41,5 +41,7 @@ public class KiteKeyBoardCharactorController : MonoBehaviour {
         {
             _handler.SetVerticalOffset(Input.GetAxis("Mouse Y"));
         }
+
+        _handler.Update();
     }
 }
