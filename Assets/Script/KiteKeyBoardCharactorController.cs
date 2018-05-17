@@ -10,10 +10,9 @@ public class KiteKeyBoardCharactorController : MonoBehaviour {
     {
         _handler.CharactorInfo.CharactorObj = this.gameObject;
     }
-    
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update ()
     {
         if (Input.GetKey(KeyCode.A))
         {

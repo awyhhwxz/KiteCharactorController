@@ -39,11 +39,22 @@ public partial class KiteCharactorContollerHandlerImpl {
         var needUpdate = _currentFrameNeedMoveCache.Count != 0;
         if (needUpdate)
         {
+            var moveVector = Vector3.zero;
             foreach (var direction in _currentFrameNeedMoveCache)
             {
                 var needMoveVector = _moveDirectionVectorDic[direction];
-                CharactorInfo.CharactorObj.transform.Translate(needMoveVector * MoveBaseValue);
+                moveVector += needMoveVector;
             }
+            
+            if (!Mathf.Equals(moveVector.magnitude, 0.0f))
+            {
+                var finalMoveVector = moveVector * MoveBaseValue;
+                if (_charactorMoveLimitter.IsAllowMove(finalMoveVector))
+                {
+                    CharactorInfo.CharactorObj.transform.Translate(finalMoveVector);
+                }
+            }
+
             _currentFrameNeedMoveCache.Clear();
         }
     }
@@ -51,6 +62,12 @@ public partial class KiteCharactorContollerHandlerImpl {
 
 public partial class KiteCharactorContollerHandlerImpl
 {
+    public KiteCharactorContollerHandlerImpl()
+    {
+        _charactorMoveLimitter.CharactorContollerHandlerImpl = this;
+    }
+
+    protected KiteCharactorMoveLimiter _charactorMoveLimitter = new KiteCharactorMoveLimiter();
 
     protected HashSet<MoveDirection> _currentFrameNeedMoveCache = new HashSet<MoveDirection>();
     protected Dictionary<MoveDirection, Vector3> _moveDirectionVectorDic = new Dictionary<MoveDirection, Vector3>()
@@ -85,6 +102,25 @@ public partial class KiteCharactorContollerHandlerImpl
             }
 
             return _charactorRigidBody;
+        }
+    }
+
+    private CapsuleCollider _capsule;
+
+    public CapsuleCollider Capsule
+    {
+        get
+        {
+            if (_capsule == null)
+            {
+                var charactorObj = CharactorInfo.CharactorObj;
+                if (charactorObj)
+                {
+                    _capsule = charactorObj.GetComponent<CapsuleCollider>();
+                }
+            }
+
+            return _capsule;
         }
     }
 }

@@ -30,8 +30,9 @@ public partial class KiteCharactorContollerHandler
         _cameraHandler.CharactorInfo = CharactorInfo;
     }
 
-    protected bool IsCharactorStateChangable { get { return IsEnable && CharactorInfo.CharactorObj; } }
-
+    /// <summary>
+    /// Must be invoke at the end of a frame
+    /// </summary>
     public void Update()
     {
         if (IsCharactorStateChangable) _charactorHandlerImpl.Update();
@@ -70,6 +71,9 @@ public partial class KiteCharactorContollerHandler
 
 public partial class KiteCharactorContollerHandler
 {
+
+    protected bool IsCharactorStateChangable { get { return IsEnable && CharactorInfo.CharactorObj; } }
+
     private bool _isEnable = true;
     
     protected void RefreshRigidbody()
