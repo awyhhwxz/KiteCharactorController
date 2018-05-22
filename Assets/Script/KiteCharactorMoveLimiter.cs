@@ -26,14 +26,17 @@ public class KiteCharactorMoveLimiter {
         var charactorObj = CharactorContollerHandlerImpl.CharactorInfo.CharactorObj;
         var footPos = charactorObj.transform.position + charactorObj.transform.up * -GetFootY();
         Debug.DrawLine(footPos, footPos - charactorObj.transform.up * CharactorContollerHandlerImpl.Capsule.radius * 1.1f);
-        if (Physics.Raycast(footPos, -charactorObj.transform.up, CharactorContollerHandlerImpl.Capsule.radius * 1.1f))
+
+        var objs = Physics.OverlapSphere(footPos, CharactorContollerHandlerImpl.Capsule.radius * 1.1f);
+        bool isAllow = false; 
+        foreach (var obj in objs)
         {
-            return true;
+            if(obj != charactorObj)
+            {
+                isAllow = true;
+            }
         }
-        else
-        {
-            return false;
-        }
+        return isAllow;
     }
 
     protected Vector3 GetFootPos()
