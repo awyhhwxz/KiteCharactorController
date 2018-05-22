@@ -60,8 +60,10 @@ public partial class KiteCharactorContollerHandlerImpl {
             if (!Mathf.Equals(moveVector.magnitude, 0.0f))
             {
                 var finalMoveVector = moveVector * MoveBaseValue;
-                if (_charactorMoveLimitter.IsAllowMove(finalMoveVector))
+                float yOffset;
+                if (_charactorMoveLimitter.IsAllowMove(finalMoveVector, out yOffset))
                 {
+                    finalMoveVector.y += yOffset;
                     CharactorInfo.CharactorObj.transform.Translate(finalMoveVector);
                 }
             }
