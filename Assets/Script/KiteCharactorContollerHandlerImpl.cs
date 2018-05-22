@@ -34,7 +34,18 @@ public partial class KiteCharactorContollerHandlerImpl {
         _currentFrameNeedMoveCache.Add(MoveDirection.Right);
     }
 
+    public void Jump()
+    {
+        _currentFrameJumpCache = true;
+    }
+
     public void Update()
+    {
+        UpdateMove();
+        UpdateJump();
+    }
+
+    protected void UpdateMove()
     {
         var needUpdate = _currentFrameNeedMoveCache.Count != 0;
         if (needUpdate)
@@ -45,7 +56,7 @@ public partial class KiteCharactorContollerHandlerImpl {
                 var needMoveVector = _moveDirectionVectorDic[direction];
                 moveVector += needMoveVector;
             }
-            
+
             if (!Mathf.Equals(moveVector.magnitude, 0.0f))
             {
                 var finalMoveVector = moveVector * MoveBaseValue;
@@ -56,6 +67,19 @@ public partial class KiteCharactorContollerHandlerImpl {
             }
 
             _currentFrameNeedMoveCache.Clear();
+        }
+    }
+
+    protected void UpdateJump()
+    {
+        if(_currentFrameJumpCache)
+        {
+            if(_charactorMoveLimitter.IsAllowJump())
+            {
+                CharactorRigidBody.AddForce(CharactorInfo.CharactorObj.transform.up / CharactorRigidBody.mass * 1000000.0f * CharactorInfo.JumpForce);
+            }
+
+            _currentFrameJumpCache = false;
         }
     }
 }
@@ -77,6 +101,8 @@ public partial class KiteCharactorContollerHandlerImpl
         { MoveDirection.Left, -Vector3.right },
         { MoveDirection.Right, Vector3.right },
     };
+
+    protected bool _currentFrameJumpCache = false;
 
     protected float MoveBaseValue
     {

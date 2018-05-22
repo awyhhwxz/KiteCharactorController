@@ -21,6 +21,27 @@ public class KiteCharactorMoveLimiter {
         }
     }
 
+    public bool IsAllowJump()
+    {
+        var charactorObj = CharactorContollerHandlerImpl.CharactorInfo.CharactorObj;
+        var footPos = charactorObj.transform.position + charactorObj.transform.up * -GetFootY();
+        Debug.DrawLine(footPos, footPos - charactorObj.transform.up * CharactorContollerHandlerImpl.Capsule.radius * 1.1f);
+        if (Physics.Raycast(footPos, -charactorObj.transform.up, CharactorContollerHandlerImpl.Capsule.radius * 1.1f))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    protected Vector3 GetFootPos()
+    {
+        var charactorObj = CharactorContollerHandlerImpl.CharactorInfo.CharactorObj;
+        return charactorObj.transform.position + charactorObj.transform.up * -GetFootY();
+    }
+
     protected float GetFootY()
     {
         var halfHeight = CharactorContollerHandlerImpl.Capsule.height * 0.5f;

@@ -58,6 +58,11 @@ public partial class KiteCharactorContollerHandler
         if (IsCharactorStateChangable) _charactorHandlerImpl.GoToRight();
     }
 
+    public void Jump()
+    {
+        if (IsCharactorStateChangable) _charactorHandlerImpl.Jump();
+    }
+
     public void SetHorizontalOffset(float offset)
     {
         if (IsCharactorStateChangable) _cameraHandler.SetHorizontalOffset(offset);

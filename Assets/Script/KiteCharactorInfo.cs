@@ -12,4 +12,6 @@ public class KiteCharactorInfo {
 
     public float CameraMaxVerticalAngle = 60.0f;
     public float CameraMinVerticalAngle = -60.0f;
+
+    public float JumpForce = 2.0f;
 }

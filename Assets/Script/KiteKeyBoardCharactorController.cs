@@ -30,8 +30,12 @@ public class KiteKeyBoardCharactorController : MonoBehaviour {
         {
             _handler.GoToForward();
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _handler.Jump();
+        }
 
-        if(Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1))
         {
             _handler.SetHorizontalOffset(Input.GetAxis("Mouse X"));
         }
