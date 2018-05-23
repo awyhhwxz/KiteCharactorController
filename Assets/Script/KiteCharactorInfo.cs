@@ -5,6 +5,7 @@ using UnityEngine;
 public class KiteCharactorInfo {
 
     public float WalkSpeed = 4.0f;
+    public float StartAcceleratedSpeed = 8.0f;
     public GameObject CharactorObj { get; set; }
 
     public float CameraHorizontalSpeed = 10.0f;

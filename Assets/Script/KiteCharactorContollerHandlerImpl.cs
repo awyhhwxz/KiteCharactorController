@@ -59,6 +59,7 @@ public partial class KiteCharactorContollerHandlerImpl {
 
             if (!Mathf.Equals(moveVector.magnitude, 0.0f))
             {
+                UpdateSpeed();
                 var finalMoveVector = moveVector * MoveBaseValue;
                 float yOffset;
                 if (_charactorMoveLimitter.IsAllowMove(finalMoveVector, out yOffset))
@@ -69,6 +70,10 @@ public partial class KiteCharactorContollerHandlerImpl {
             }
 
             _currentFrameNeedMoveCache.Clear();
+        }
+        else
+        {
+            _currentMoveSpeed = 0.0f;
         }
     }
 
@@ -83,6 +88,12 @@ public partial class KiteCharactorContollerHandlerImpl {
 
             _currentFrameJumpCache = false;
         }
+    }
+
+    protected void UpdateSpeed()
+    {
+        _currentMoveSpeed += Time.deltaTime * CharactorInfo.StartAcceleratedSpeed;
+        _currentMoveSpeed = Mathf.Min(_currentMoveSpeed, CharactorInfo.WalkSpeed);
     }
 }
 
@@ -106,11 +117,13 @@ public partial class KiteCharactorContollerHandlerImpl
 
     protected bool _currentFrameJumpCache = false;
 
+    protected float _currentMoveSpeed = 0.0f;
+
     protected float MoveBaseValue
     {
         get
         {
-            return Time.deltaTime * CharactorInfo.WalkSpeed;
+            return Time.deltaTime * _currentMoveSpeed;
         }
     }
 
