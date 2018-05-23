@@ -34,6 +34,10 @@ public class KiteKeyBoardCharactorController : MonoBehaviour {
         {
             _handler.Jump();
         }
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            _handler.ChangeCrouchState();
+        }
 
         if (Input.GetMouseButton(1))
         {

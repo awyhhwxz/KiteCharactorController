@@ -19,7 +19,7 @@ public class KiteCharactorCameraHandler {
 
     public void SetVerticalOffset(float offset)
     {
-        var cameraObj = _CameraObj;
+        var cameraObj = CharactorInfo.CameraObj;
         if (cameraObj)
         {
             _currentVerticalRotate = Mathf.Clamp(_currentVerticalRotate - offset * CharactorInfo.CameraHorizontalSpeed, CharactorInfo.CameraMinVerticalAngle, CharactorInfo.CameraMaxVerticalAngle);
@@ -27,24 +27,4 @@ public class KiteCharactorCameraHandler {
         }
     }
 
-    private GameObject _cameraObj = null;
-    protected GameObject _CameraObj {
-        get
-        {
-            if(_cameraObj == null)
-            {
-                var charactorObj = CharactorInfo.CharactorObj;
-                if(charactorObj)
-                {
-                    var eyeBase = charactorObj.transform.Find("EyeBase");
-                    if(eyeBase)
-                    {
-                        _cameraObj = eyeBase.gameObject;
-                    }
-                }
-            }
-
-            return _cameraObj;
-        }
-    }
 }

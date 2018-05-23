@@ -7,6 +7,7 @@ public partial class KiteCharactorContollerHandler
 
     private KiteCharactorContollerHandlerImpl _charactorHandlerImpl = new KiteCharactorContollerHandlerImpl();
     private KiteCharactorCameraHandler _cameraHandler = new KiteCharactorCameraHandler();
+    private KiteCharactorCrouchHandler _crouchHandler = new KiteCharactorCrouchHandler();
 
     public KiteCharactorInfo CharactorInfo = new KiteCharactorInfo();
 
@@ -28,6 +29,7 @@ public partial class KiteCharactorContollerHandler
     {
         _charactorHandlerImpl.CharactorInfo = CharactorInfo;
         _cameraHandler.CharactorInfo = CharactorInfo;
+        _crouchHandler.CharactorInfo = CharactorInfo;
     }
 
     /// <summary>
@@ -63,7 +65,12 @@ public partial class KiteCharactorContollerHandler
         if (IsCharactorStateChangable) _charactorHandlerImpl.Jump();
     }
 
-    public void SetHorizontalOffset(float offset)
+    public void ChangeCrouchState()
+    {
+        if (IsCharactorStateChangable) _crouchHandler.ChangeCrouchState();
+    }
+
+        public void SetHorizontalOffset(float offset)
     {
         if (IsCharactorStateChangable) _cameraHandler.SetHorizontalOffset(offset);
     }

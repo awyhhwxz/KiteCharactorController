@@ -145,23 +145,4 @@ public partial class KiteCharactorContollerHandlerImpl
             return _charactorRigidBody;
         }
     }
-
-    private CapsuleCollider _capsule;
-
-    public CapsuleCollider Capsule
-    {
-        get
-        {
-            if (_capsule == null)
-            {
-                var charactorObj = CharactorInfo.CharactorObj;
-                if (charactorObj)
-                {
-                    _capsule = charactorObj.GetComponent<CapsuleCollider>();
-                }
-            }
-
-            return _capsule;
-        }
-    }
 }

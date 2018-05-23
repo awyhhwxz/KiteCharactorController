@@ -13,7 +13,7 @@ public class KiteCharactorMoveLimiter {
         var footPos = charactorObj.transform.position + charactorObj.transform.up * -GetFootY();
         var rayDirection = charactorObj.transform.TransformDirection(moveVector);
         //the first raycast, check for front of role
-        if (Physics.Raycast(footPos, rayDirection, CharactorContollerHandlerImpl.Capsule.radius + moveVector.magnitude))
+        if (Physics.Raycast(footPos, rayDirection, CharactorContollerHandlerImpl.CharactorInfo.Capsule.radius + moveVector.magnitude))
         {
             return false;
         }
@@ -22,7 +22,7 @@ public class KiteCharactorMoveLimiter {
             var stepHeight = CharactorContollerHandlerImpl.CharactorInfo.StepHeight;
             var belowForward = -charactorObj.transform.up;
             var nextFrameFootPoint = footPos + rayDirection;
-            var radius = CharactorContollerHandlerImpl.Capsule.radius;
+            var radius = CharactorContollerHandlerImpl.CharactorInfo.Capsule.radius;
             var rayMaxLength = radius + stepHeight;
             RaycastHit hitInfo;
             //the second raycast, check for slope 
@@ -55,9 +55,9 @@ public class KiteCharactorMoveLimiter {
     {
         var charactorObj = CharactorContollerHandlerImpl.CharactorInfo.CharactorObj;
         var footPos = charactorObj.transform.position + charactorObj.transform.up * -GetFootY();
-        Debug.DrawLine(footPos, footPos - charactorObj.transform.up * CharactorContollerHandlerImpl.Capsule.radius * 1.1f);
+        Debug.DrawLine(footPos, footPos - charactorObj.transform.up * CharactorContollerHandlerImpl.CharactorInfo.Capsule.radius * 1.1f);
 
-        var objs = Physics.OverlapSphere(footPos, CharactorContollerHandlerImpl.Capsule.radius * 1.1f);
+        var objs = Physics.OverlapSphere(footPos, CharactorContollerHandlerImpl.CharactorInfo.Capsule.radius * 1.1f);
         bool isAllow = false;
         foreach (var obj in objs)
         {
@@ -77,7 +77,7 @@ public class KiteCharactorMoveLimiter {
 
     protected float GetFootY()
     {
-        var halfHeight = CharactorContollerHandlerImpl.Capsule.height * 0.5f;
-        return halfHeight - CharactorContollerHandlerImpl.Capsule.radius;
+        var halfHeight = CharactorContollerHandlerImpl.CharactorInfo.Capsule.height * 0.5f;
+        return halfHeight - CharactorContollerHandlerImpl.CharactorInfo.Capsule.radius;
     }
 }
